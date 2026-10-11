@@ -34,7 +34,7 @@ spec:
       containers:
         - name: podinfo
           # Pinned by tag AND digest (scripts/02-pin-images.sh fills in the digest)
-          image: ghcr.io/stefanprodan/podinfo:6.14.0@sha256:0a8aa037137c010a75aed8d3fe56931d0edd3bcd0e55acfb96db11e1e96397b1
+          image: ghcr.io/stefanprodan/podinfo:6.14.1@sha256:f9537f729129d339aaef049b76ab2cd4ff06a424f99e5f6a5923c10621018fb1
           imagePullPolicy: IfNotPresent
           command:
             - ./podinfo
@@ -44,7 +44,7 @@ spec:
             - --data-path=/data
           env:
             - name: PODINFO_UI_MESSAGE
-              value: "gitops-demo v1"
+              value: "gitops-demo v2"
             - name: PODINFO_UI_COLOR
               value: "#34577c"
           ports:
