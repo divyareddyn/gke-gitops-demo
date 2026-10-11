@@ -1,0 +1,25 @@
+# Allow ONLY pods labelled app.kubernetes.io/name=loadgen that run in the
+# "loadgen" namespace to reach podinfo on TCP 9898.
+# Both selectors are in the SAME "from" entry, so BOTH must match (AND).
+# kubernetes.io/metadata.name is set by the API server and cannot be spoofed.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-loadgen-to-podinfo
+  namespace: demo
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: podinfo
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: loadgen
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: loadgen
+      ports:
+        - protocol: TCP
+          port: 9898

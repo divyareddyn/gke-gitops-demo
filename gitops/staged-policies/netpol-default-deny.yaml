@@ -1,0 +1,11 @@
+# Deny ALL inbound traffic to every pod in "demo" unless another policy allows it.
+# Enforced by GKE Dataplane V2 (Cilium/eBPF). Without a policy-capable CNI this
+# object would be accepted but silently ignored.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: demo
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
