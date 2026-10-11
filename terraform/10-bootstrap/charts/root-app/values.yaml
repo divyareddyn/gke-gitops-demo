@@ -1,0 +1,5 @@
+# Overridden by Terraform (main.tf)
+repoURL: ""
+targetRevision: main
+path: gitops/apps/podinfo
+destinationNamespace: demo

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: root-app
+description: Registers the demo AppProject and Application with Argo CD
+type: application
+version: 0.1.0
