@@ -43,7 +43,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
       containers:
         - name: k6
-          image: docker.io/grafana/k6:1.7.1
+          image: docker.io/grafana/k6:1.7.1@sha256:4fd3a694926b064d3491d9b02b01cde886583c4931f1223816e3d9a7bdfa7e0f
           args: ["run", "--summary-trend-stats=avg,p(95),p(99),max", "/scripts/load.js"]
           resources:
             requests: { cpu: 500m, memory: 128Mi }

@@ -30,7 +30,7 @@ spec:
     seccompProfile: { type: RuntimeDefault }
   containers:
     - name: curl
-      image: docker.io/curlimages/curl:8.20.0
+      image: docker.io/curlimages/curl:8.20.0@sha256:b3f1fb2a51d923260350d21b8654bbc607164a987e2f7c84a0ac199a67df812a
       command: ["sleep", "86400"]
       resources:
         requests: { cpu: 10m, memory: 16Mi }
@@ -54,7 +54,7 @@ spec:
     seccompProfile: { type: RuntimeDefault }
   containers:
     - name: curl
-      image: docker.io/curlimages/curl:8.20.0
+      image: docker.io/curlimages/curl:8.20.0@sha256:b3f1fb2a51d923260350d21b8654bbc607164a987e2f7c84a0ac199a67df812a
       command: ["sleep", "86400"]
       resources:
         requests: { cpu: 10m, memory: 16Mi }
@@ -80,7 +80,7 @@ spec:
     seccompProfile: { type: RuntimeDefault }
   containers:
     - name: curl
-      image: docker.io/curlimages/curl:8.20.0
+      image: docker.io/curlimages/curl:8.20.0@sha256:b3f1fb2a51d923260350d21b8654bbc607164a987e2f7c84a0ac199a67df812a
       command: ["sleep", "86400"]
       resources:
         requests: { cpu: 10m, memory: 16Mi }
