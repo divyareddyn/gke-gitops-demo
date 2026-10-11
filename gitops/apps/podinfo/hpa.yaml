@@ -1,0 +1,31 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: podinfo
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: podinfo
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: podinfo
+  minReplicas: 2   # never fewer than 2: survives one pod/node failure
+  maxReplicas: 6   # cost/blast-radius cap; 6 x 50m CPU fits easily on the node pool
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60   # % of the 50m CPU request
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - { type: Percent, value: 100, periodSeconds: 15 }   # at most double every 15s
+    scaleDown:
+      # Default is 300s. Shortened for the demo so scale-in is visible within minutes.
+      stabilizationWindowSeconds: 60
+      policies:
+        - { type: Pods, value: 2, periodSeconds: 30 }        # remove at most 2 pods / 30s

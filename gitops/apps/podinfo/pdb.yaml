@@ -1,0 +1,11 @@
+# Keep at least one pod serving during voluntary disruptions (node upgrades, drains).
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: podinfo
+  namespace: demo
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podinfo

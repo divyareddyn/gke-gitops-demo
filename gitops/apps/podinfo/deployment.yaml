@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: podinfo
+    app.kubernetes.io/part-of: gitops-demo
+spec:
+  # NOTE: no "replicas:" field on purpose. The HorizontalPodAutoscaler owns the
+  # replica count; if Git also set it, Argo CD self-heal would fight the HPA.
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: podinfo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: podinfo   # NetworkPolicy selects on this label
+        app.kubernetes.io/part-of: gitops-demo
+    spec:
+      serviceAccountName: podinfo
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 15
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 100     # the image's "app" user; set numerically so runAsNonRoot can be verified
+        runAsGroup: 101
+        fsGroup: 101
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: podinfo
+          # Pinned by tag AND digest (scripts/02-pin-images.sh fills in the digest)
+          image: ghcr.io/stefanprodan/podinfo:6.14.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - ./podinfo
+            - --port=9898
+            - --port-metrics=9797
+            - --level=info
+            - --data-path=/data
+          env:
+            - name: PODINFO_UI_MESSAGE
+              value: "gitops-demo v1"
+            - name: PODINFO_UI_COLOR
+              value: "#34577c"
+          ports:
+            - { name: http, containerPort: 9898, protocol: TCP }
+            - { name: http-metrics, containerPort: 9797, protocol: TCP }
+          readinessProbe:          # "can I receive traffic?"
+            httpGet: { path: /readyz, port: http }
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:           # "am I stuck? restart me"
+            httpGet: { path: /healthz, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }    # HPA % is measured against the CPU request
+            limits:   { cpu: 200m, memory: 128Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - { name: data, emptyDir: { sizeLimit: 64Mi } }
+        - { name: tmp, emptyDir: { sizeLimit: 64Mi } }

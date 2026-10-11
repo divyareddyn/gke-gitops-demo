@@ -1,0 +1,91 @@
+# Test fixtures for the NetworkPolicy check (NOT part of the GitOps app).
+# Three identical curl pods that differ only in namespace and label.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: loadgen
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: untrusted
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+---
+# ALLOWED: right namespace (loadgen) AND right label
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allowed-client
+  namespace: loadgen
+  labels:
+    app.kubernetes.io/name: loadgen
+spec:
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile: { type: RuntimeDefault }
+  containers:
+    - name: curl
+      image: docker.io/curlimages/curl:8.20.0
+      command: ["sleep", "86400"]
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits: { cpu: 200m, memory: 64Mi }
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities: { drop: ["ALL"] }
+---
+# DENIED: right namespace, but missing the label
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unlabeled-client
+  namespace: loadgen
+spec:
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile: { type: RuntimeDefault }
+  containers:
+    - name: curl
+      image: docker.io/curlimages/curl:8.20.0
+      command: ["sleep", "86400"]
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits: { cpu: 100m, memory: 64Mi }
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities: { drop: ["ALL"] }
+---
+# DENIED: has the label, but lives in the wrong namespace
+apiVersion: v1
+kind: Pod
+metadata:
+  name: outsider
+  namespace: untrusted
+  labels:
+    app.kubernetes.io/name: loadgen
+spec:
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile: { type: RuntimeDefault }
+  containers:
+    - name: curl
+      image: docker.io/curlimages/curl:8.20.0
+      command: ["sleep", "86400"]
+      resources:
+        requests: { cpu: 10m, memory: 16Mi }
+        limits: { cpu: 100m, memory: 64Mi }
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities: { drop: ["ALL"] }

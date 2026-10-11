@@ -1,0 +1,49 @@
+### 2026-10-11T03:41:56Z  $ gcloud version
+[2026-10-11T03:41:57Z] Google Cloud SDK 587.0.0
+[2026-10-11T03:41:57Z] alpha 2026.09.25
+[2026-10-11T03:41:57Z] app-engine-go 1.9.78
+[2026-10-11T03:41:57Z] app-engine-java 5.1.0
+[2026-10-11T03:41:57Z] app-engine-python 1.9.118
+[2026-10-11T03:41:57Z] app-engine-python-extras 1.9.111
+[2026-10-11T03:41:57Z] beta 2026.09.25
+[2026-10-11T03:41:57Z] bigtable 
+[2026-10-11T03:41:57Z] bq 2.1.39
+[2026-10-11T03:41:57Z] bundled-python3-unix 3.14.7
+[2026-10-11T03:41:57Z] cbt 1.25.4
+[2026-10-11T03:41:57Z] cloud-datastore-emulator 2.3.1
+[2026-10-11T03:41:57Z] cloud-run-proxy 0.5.1
+[2026-10-11T03:41:57Z] core 2026.09.25
+[2026-10-11T03:41:57Z] gcloud-crc32c 1.0.0
+[2026-10-11T03:41:57Z] gke-gcloud-auth-plugin 0.5.19
+[2026-10-11T03:41:57Z] gsutil 5.37
+[2026-10-11T03:41:57Z] istioctl 1.20.8113
+[2026-10-11T03:41:57Z] kpt 1.0.0-beta.67
+[2026-10-11T03:41:57Z] kubectl 1.35.8
+[2026-10-11T03:41:57Z] local-extract 1.6.3
+[2026-10-11T03:41:57Z] minikube 1.38.1
+[2026-10-11T03:41:57Z] nomos 1.25.0-rc.1
+[2026-10-11T03:41:57Z] package-go-module 1.0.1
+[2026-10-11T03:41:57Z] preview 2026.09.25
+[2026-10-11T03:41:57Z] pubsub-emulator 0.8.36
+[2026-10-11T03:41:57Z] skaffold 2.25.0
+[2026-10-11T03:41:57Z] spanner-cli 1.0.4
+[2026-10-11T03:41:57Z] (exit code: 0)
+
+### 2026-10-11T03:41:57Z  $ terraform version
+[2026-10-11T03:41:57Z] Terraform v1.16.5
+[2026-10-11T03:41:57Z] on linux_amd64
+[2026-10-11T03:41:57Z] (exit code: 0)
+
+### 2026-10-11T03:41:57Z  $ kubectl version --client
+[2026-10-11T03:41:58Z] Client Version: v1.35.8-dispatcher
+[2026-10-11T03:41:58Z] Kustomize Version: v5.7.1
+[2026-10-11T03:41:58Z] (exit code: 0)
+
+### 2026-10-11T03:41:58Z  $ helm version --short
+[2026-10-11T03:41:58Z] v4.3
+[2026-10-11T03:41:58Z] (exit code: 0)
+
+### 2026-10-11T03:41:58Z  $ git --version
+[2026-10-11T03:41:58Z] git version 2.43.0
+[2026-10-11T03:41:58Z] (exit code: 0)
+

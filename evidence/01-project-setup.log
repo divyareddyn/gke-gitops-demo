@@ -1,0 +1,22 @@
+### 2026-10-11T03:45:41Z  $ gcloud services enable container.googleapis.com compute.googleapis.com iam.googleapis.com cloudresourcemanager.googleapis.com logging.googleapis.com monitoring.googleapis.com serviceusage.googleapis.com --project gke-gitops-showcase
+[2026-10-11T03:46:55Z] Operation "operations/acf.p2-883485911589-38eb0622-b919-4c81-b960-93d61642b4a7" finished successfully.
+[2026-10-11T03:46:55Z] (exit code: 0)
+
+### 2026-10-11T03:46:58Z  $ gcloud storage buckets create gs://gke-gitops-showcase-tfstate --project gke-gitops-showcase --location us-central1 --uniform-bucket-level-access --public-access-prevention
+[2026-10-11T03:46:59Z] Creating gs://gke-gitops-showcase-tfstate/...
+[2026-10-11T03:47:01Z] (exit code: 0)
+
+### 2026-10-11T03:47:01Z  $ gcloud storage buckets update gs://gke-gitops-showcase-tfstate --versioning
+[2026-10-11T03:47:02Z]   
+[2026-10-11T03:47:02Z] Updating gs://gke-gitops-showcase-tfstate/...
+[2026-10-11T03:47:02Z] 
+[2026-10-11T03:47:04Z] (exit code: 0)
+
+### 2026-10-11T03:47:04Z  $ gcloud storage buckets describe gs://gke-gitops-showcase-tfstate --format=yaml(name,location,versioning_enabled,public_access_prevention,uniform_bucket_level_access)
+[2026-10-11T03:47:05Z] location: US-CENTRAL1
+[2026-10-11T03:47:05Z] name: gke-gitops-showcase-tfstate
+[2026-10-11T03:47:05Z] public_access_prevention: enforced
+[2026-10-11T03:47:05Z] uniform_bucket_level_access: true
+[2026-10-11T03:47:05Z] versioning_enabled: true
+[2026-10-11T03:47:06Z] (exit code: 0)
+
